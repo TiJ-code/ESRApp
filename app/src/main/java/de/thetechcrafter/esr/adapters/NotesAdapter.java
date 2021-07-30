@@ -6,10 +6,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.PopupMenu;
-import android.widget.TextView;
+import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
@@ -21,7 +18,7 @@ import de.thetechcrafter.esr.utils.DbHelper;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class NotesAdapter extends ArrayList<Note> {
+public class NotesAdapter extends ArrayAdapter<Note> {
 
     private Activity mActivity;
     private int mResource;
@@ -73,6 +70,7 @@ public class NotesAdapter extends ArrayList<Note> {
                 final DbHelper db = new DbHelper(mActivity);
                 popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.delete_popup:
@@ -87,6 +85,7 @@ public class NotesAdapter extends ArrayList<Note> {
                                 AlertDialogsHelper.getEditNoteDialog(mActivity, alertLayout, notelist, mListView, position);
                                 notifyDataSetChanged();
                                 return true;
+
                             default:
                                 return onMenuItemClick(item);
                         }
@@ -116,10 +115,10 @@ public class NotesAdapter extends ArrayList<Note> {
 
     private void hidePopUpMenu(ViewHolder holder) {
         SparseBooleanArray checkedItems = mListView.getCheckedItemPositions();
-        if (checkedItems.size() > 0) {
-            for (int i = 0; i < checkedItems.size(); i++) {
+        if(checkedItems.size() > 0) {
+            for(int i = 0; i < checkedItems.size(); i++) {
                 int key = checkedItems.keyAt(i);
-                if (checkedItems.get(key)) {
+                if(checkedItems.get(key)) {
                     holder.popup.setVisibility(View.INVISIBLE);
                 }
             }

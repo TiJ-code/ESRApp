@@ -54,13 +54,14 @@ public class ColorPickerDialog extends DialogFragment implements OnColorSelected
                                                 int columns, int size, boolean backwardsOrder,
                                                 int strokeWidth, int strokeColor) {
         ColorPickerDialog ret = new ColorPickerDialog();
-        ret.initialize(titleResId, colors, selectedColor, columns, size,backwardsOrder, strokeWidth, strokeColor);
+        ret.initialize(titleResId, colors, selectedColor, columns, size, backwardsOrder, strokeWidth, strokeColor);
         return ret;
     }
 
-    public void initialize(int titleResId, int[] colors, int selectedColor, int columns, int size,
-                           boolean backwardsDisable, int strokeWidth, int strokeColor) {
-        setArguments(titleResId, columns, size, backwardsDisable, strokeWidth, strokeColor);
+    public void initialize(int titleResId, int[] colors, int selectedColor,
+                           int columns, int size, boolean backwardsOrder,
+                           int strokeWidth, int strokeColor) {
+        setArguments(titleResId, columns, size, backwardsOrder, strokeWidth, strokeColor);
         setColors(colors, selectedColor);
     }
 
@@ -104,7 +105,7 @@ public class ColorPickerDialog extends DialogFragment implements OnColorSelected
     }
 
     @Override
-    public Dialog onCreateDialog(Bundle savedInstance) {
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
         final Activity activity = getActivity();
 
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.color_picker_dialog, null);
@@ -131,7 +132,8 @@ public class ColorPickerDialog extends DialogFragment implements OnColorSelected
         }
 
         if(getTargetFragment() instanceof OnColorSelectedListener) {
-            final OnColorSelectedListener listener = (OnColorSelectedListener) getTargetFragment();
+            final OnColorSelectedListener listener =
+                    (OnColorSelectedListener) getTargetFragment();
             listener.onColorSelected(color);
         }
 
@@ -153,8 +155,8 @@ public class ColorPickerDialog extends DialogFragment implements OnColorSelected
 
     public void showProgressBarView() {
         if(mProgress != null && mPalette != null) {
-            mProgress.setVisibility(View.GONE);
-            mPalette.setVisibility(View.VISIBLE);
+            mProgress.setVisibility(View.VISIBLE);
+            mPalette.setVisibility(View.GONE);
         }
     }
 
@@ -173,8 +175,8 @@ public class ColorPickerDialog extends DialogFragment implements OnColorSelected
         }
     }
 
-    public void refreshPalette() {
-        if(mPalette != null && mColors != null) {
+    private void refreshPalette() {
+        if (mPalette != null && mColors != null) {
             mPalette.drawPalette(mColors, mSelectedColor, mColorContentDescriptions, mStrokeWidth, mStrokeColor);
         }
     }
