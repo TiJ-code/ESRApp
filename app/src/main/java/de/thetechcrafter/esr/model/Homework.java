@@ -12,7 +12,6 @@ public class Homework {
         this.date = date;
         this.color = color;
     }
-
     public String getSubject() {
         return subject;
     }

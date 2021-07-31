@@ -1,23 +1,32 @@
 package de.thetechcrafter.esr.adapters;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.PopupMenu;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
-import de.thetechcrafter.esr.R;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+
 import de.thetechcrafter.esr.model.Note;
+import com.ulan.timetable.R;
 import de.thetechcrafter.esr.utils.AlertDialogsHelper;
 import de.thetechcrafter.esr.utils.DbHelper;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
+
+/**
+ * Created by Ulan on 28.09.2018.
+ */
 public class NotesAdapter extends ArrayAdapter<Note> {
 
     private Activity mActivity;
@@ -70,7 +79,6 @@ public class NotesAdapter extends ArrayAdapter<Note> {
                 final DbHelper db = new DbHelper(mActivity);
                 popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.delete_popup:
@@ -85,7 +93,6 @@ public class NotesAdapter extends ArrayAdapter<Note> {
                                 AlertDialogsHelper.getEditNoteDialog(mActivity, alertLayout, notelist, mListView, position);
                                 notifyDataSetChanged();
                                 return true;
-
                             default:
                                 return onMenuItemClick(item);
                         }
@@ -113,14 +120,14 @@ public class NotesAdapter extends ArrayAdapter<Note> {
         return note;
     }
 
-    private void hidePopUpMenu(ViewHolder holder) {
+     private void hidePopUpMenu(ViewHolder holder) {
         SparseBooleanArray checkedItems = mListView.getCheckedItemPositions();
-        if(checkedItems.size() > 0) {
-            for(int i = 0; i < checkedItems.size(); i++) {
+        if (checkedItems.size() > 0) {
+            for (int i = 0; i < checkedItems.size(); i++) {
                 int key = checkedItems.keyAt(i);
-                if(checkedItems.get(key)) {
+                if (checkedItems.get(key)) {
                     holder.popup.setVisibility(View.INVISIBLE);
-                }
+                    }
             }
         } else {
             holder.popup.setVisibility(View.VISIBLE);

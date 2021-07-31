@@ -4,8 +4,8 @@ public class Teacher {
     private String name, post, email;
     private int id, color;
 
-    public Teacher() {}
-
+    public Teacher() {
+    }
     public Teacher(String name, String post, String email, int color) {
         this.name = name;
         this.post = post;

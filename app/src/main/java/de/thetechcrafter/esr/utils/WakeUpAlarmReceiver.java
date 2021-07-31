@@ -5,15 +5,12 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
-import androidx.annotation.RequiresApi;
 
 import java.util.Calendar;
 import java.util.Objects;
 
 public class WakeUpAlarmReceiver extends BroadcastReceiver {
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onReceive(Context context, Intent intent) {
 
@@ -21,7 +18,7 @@ public class WakeUpAlarmReceiver extends BroadcastReceiver {
 
             Calendar calendar = Calendar.getInstance();
 
-            calendar.set(Calendar.HOUR_OF_DAY, 7);
+            calendar.set(Calendar.HOUR_OF_DAY, 8);
             calendar.set(Calendar.MINUTE, 30);
             calendar.set(Calendar.SECOND, 0);
             calendar.set(Calendar.MILLISECOND, 0);
@@ -40,6 +37,7 @@ public class WakeUpAlarmReceiver extends BroadcastReceiver {
             if (alarmManager != null) {
                 alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
             }
+
         }
     }
 }

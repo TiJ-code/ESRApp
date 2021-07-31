@@ -5,7 +5,7 @@
     android:id="@+id/coordinatorHomeworks"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.HomeworksActivity"
+    tools:context="de.thetechcrafter.esr.activities.HomeworksActivity"
     android:orientation="vertical">
 
     <android.support.constraint.ConstraintLayout

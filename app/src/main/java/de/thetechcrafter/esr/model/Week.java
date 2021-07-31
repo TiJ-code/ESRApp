@@ -1,6 +1,7 @@
 package de.thetechcrafter.esr.model;
 
 public class Week {
+
     private String subject, fragment, teacher, room, fromtime, totime, time;
     private int id, color;
 

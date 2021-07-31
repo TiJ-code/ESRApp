@@ -1,22 +1,30 @@
 package de.thetechcrafter.esr.adapters;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.PopupMenu;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
-import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import de.thetechcrafter.esr.R;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+
 import de.thetechcrafter.esr.model.Homework;
+import com.ulan.timetable.R;
 import de.thetechcrafter.esr.utils.AlertDialogsHelper;
 import de.thetechcrafter.esr.utils.DbHelper;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * Created by Ulan on 21.09.2018.
+ */
 public class HomeworksAdapter extends ArrayAdapter<Homework> {
 
     private Activity mActivity;
@@ -52,7 +60,7 @@ public class HomeworksAdapter extends ArrayAdapter<Homework> {
         homework = new Homework(subject, description, date, color);
         final ViewHolder holder;
 
-        if(convertView == null) {
+        if(convertView == null){
             LayoutInflater inflater = LayoutInflater.from(mActivity);
             convertView = inflater.inflate(mResource, parent, false);
             holder = new ViewHolder();
@@ -62,7 +70,8 @@ public class HomeworksAdapter extends ArrayAdapter<Homework> {
             holder.cardView = convertView.findViewById(R.id.homeworks_cardview);
             holder.popup = convertView.findViewById(R.id.popupbtn);
             convertView.setTag(holder);
-        } else {
+        }
+        else{
             holder = (ViewHolder) convertView.getTag();
         }
         holder.subject.setText(homework.getSubject());
@@ -76,7 +85,6 @@ public class HomeworksAdapter extends ArrayAdapter<Homework> {
                 final DbHelper db = new DbHelper(mActivity);
                 popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.delete_popup:
@@ -91,7 +99,6 @@ public class HomeworksAdapter extends ArrayAdapter<Homework> {
                                 AlertDialogsHelper.getEditHomeworkDialog(mActivity, alertLayout, homeworklist, mListView, position);
                                 notifyDataSetChanged();
                                 return true;
-
                             default:
                                 return onMenuItemClick(item);
                         }
@@ -100,6 +107,7 @@ public class HomeworksAdapter extends ArrayAdapter<Homework> {
                 popup.show();
             }
         });
+
         hidePopUpMenu(holder);
 
         return convertView;
@@ -110,7 +118,7 @@ public class HomeworksAdapter extends ArrayAdapter<Homework> {
         return super.getItemId(position);
     }
 
-    public ArrayList<Homework> getHomeworklist() {
+    public ArrayList<Homework> getHomeworkList() {
         return homeworklist;
     }
 
@@ -120,10 +128,10 @@ public class HomeworksAdapter extends ArrayAdapter<Homework> {
 
     private void hidePopUpMenu(ViewHolder holder) {
         SparseBooleanArray checkedItems = mListView.getCheckedItemPositions();
-        if(checkedItems.size() > 0) {
+        if (checkedItems.size() > 0) {
             for (int i = 0; i < checkedItems.size(); i++) {
                 int key = checkedItems.keyAt(i);
-                if(checkedItems.get(key)) {
+                if (checkedItems.get(key)) {
                     holder.popup.setVisibility(View.INVISIBLE);
                 }
             }
@@ -132,3 +140,4 @@ public class HomeworksAdapter extends ArrayAdapter<Homework> {
         }
     }
 }
+

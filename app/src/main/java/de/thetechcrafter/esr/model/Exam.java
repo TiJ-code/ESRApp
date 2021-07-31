@@ -9,6 +9,7 @@ public class Exam {
     public Exam(String subject, String teacher, String time, String date, String room, int color) {
         this.subject = subject;
         this.teacher = teacher;
+        this.time = time;
         this.date = date;
         this.room = room;
         this.color = color;
@@ -30,20 +31,20 @@ public class Exam {
         this.teacher = teacher;
     }
 
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
     public String getTime() {
         return time;
     }
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getRoom() {

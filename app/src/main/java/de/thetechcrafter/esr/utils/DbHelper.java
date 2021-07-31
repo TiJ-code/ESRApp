@@ -1,16 +1,22 @@
 package de.thetechcrafter.esr.utils;
 
-import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import de.thetechcrafter.esr.model.*;
+import de.thetechcrafter.esr.model.Exam;
+import de.thetechcrafter.esr.model.Homework;
+import de.thetechcrafter.esr.model.Note;
+import de.thetechcrafter.esr.model.Teacher;
+import de.thetechcrafter.esr.model.Week;
 
 import java.util.ArrayList;
 
+/**
+ * Created by Ulan on 07.09.2018.
+ */
 public class DbHelper extends SQLiteOpenHelper{
 
     private static final int DB_VERSION = 6;
@@ -60,7 +66,7 @@ public class DbHelper extends SQLiteOpenHelper{
         super(context , DB_NAME, null, DB_VERSION);
     }
 
-    public void onCreate(SQLiteDatabase db) {
+     public void onCreate(SQLiteDatabase db) {
         String CREATE_TIMETABLE = "CREATE TABLE " + TIMETABLE + "("
                 + WEEK_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + WEEK_SUBJECT + " TEXT,"
@@ -130,6 +136,9 @@ public class DbHelper extends SQLiteOpenHelper{
         onCreate(db);
     }
 
+    /**
+     * Methods for Week fragments
+     **/
     public void insertWeek(Week week){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -164,7 +173,6 @@ public class DbHelper extends SQLiteOpenHelper{
         db.close();
     }
 
-    @SuppressLint("Range")
     public ArrayList<Week> getWeek(String fragment){
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -185,6 +193,9 @@ public class DbHelper extends SQLiteOpenHelper{
         return  weeklist;
     }
 
+    /**
+     * Methods for Homeworks activity
+     **/
     public void insertHomework(Homework homework) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -214,7 +225,6 @@ public class DbHelper extends SQLiteOpenHelper{
     }
 
 
-    @SuppressLint("Range")
     public ArrayList<Homework> getHomework() {
         SQLiteDatabase db = this.getWritableDatabase();
         ArrayList<Homework> homelist = new ArrayList<>();
@@ -234,6 +244,9 @@ public class DbHelper extends SQLiteOpenHelper{
         return  homelist;
     }
 
+    /**
+     * Methods for Notes activity
+     **/
     public void insertNote(Note note) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -260,7 +273,6 @@ public class DbHelper extends SQLiteOpenHelper{
         db.close();
     }
 
-    @SuppressLint("Range")
     public ArrayList<Note> getNote() {
         SQLiteDatabase db = this.getWritableDatabase();
         ArrayList<Note> notelist = new ArrayList<>();
@@ -279,6 +291,9 @@ public class DbHelper extends SQLiteOpenHelper{
         return notelist;
     }
 
+    /**
+     * Methods for Teachers activity
+     **/
     public void insertTeacher(Teacher teacher) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -307,7 +322,6 @@ public class DbHelper extends SQLiteOpenHelper{
         db.close();
     }
 
-    @SuppressLint("Range")
     public ArrayList<Teacher> getTeacher() {
         SQLiteDatabase db = this.getWritableDatabase();
         ArrayList<Teacher> teacherlist = new ArrayList<>();
@@ -362,7 +376,6 @@ public class DbHelper extends SQLiteOpenHelper{
         db.close();
     }
 
-    @SuppressLint("Range")
     public ArrayList<Exam> getExam() {
         SQLiteDatabase db = this.getWritableDatabase();
         ArrayList<Exam> examslist = new ArrayList<>();

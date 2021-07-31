@@ -2,30 +2,40 @@ package de.thetechcrafter.esr.adapters;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.PopupMenu;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
-import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import de.thetechcrafter.esr.R;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.ulan.timetable.R;
 import de.thetechcrafter.esr.model.Week;
+import de.thetechcrafter.esr.utils.AlertDialogsHelper;
 import de.thetechcrafter.esr.utils.DbHelper;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
+
+/**
+ * Created by Ulan on 08.09.2018.
+ */
 public class WeekAdapter extends ArrayAdapter<Week> {
 
-    private Activity activity;
-    private int resource;
-    private ArrayList<Week> weekList;
+    private Activity mActivity;
+    private int mResource;
+    private ArrayList<Week> weeklist;
     private Week week;
-    private ListView listView;
+    private ListView mListView;
 
-    public static class ViewHolder {
+    private static class ViewHolder {
         TextView subject;
         TextView teacher;
         TextView time;
@@ -36,13 +46,13 @@ public class WeekAdapter extends ArrayAdapter<Week> {
 
     public WeekAdapter(Activity activity, ListView listView, int resource, ArrayList<Week> objects) {
         super(activity, resource, objects);
-        this.activity = activity;
-        this.resource = resource;
-        this.weekList = objects;
-        this.listView = listView;
+        mActivity = activity;
+        mResource = resource;
+        weeklist = objects;
+        mListView = listView;
     }
 
-    @SuppressLint("SexTextI18n")
+    @SuppressLint("SetTextI18n")
     @NonNull
     @Override
     public View getView(final int position, View convertView, @NonNull ViewGroup parent) {
@@ -56,10 +66,10 @@ public class WeekAdapter extends ArrayAdapter<Week> {
         week = new Week(subject, teacher, room, time_from, time_to, color);
         final ViewHolder holder;
 
-        if(convertView == null) {
-            LayoutInflater inflater = LayoutInflater.from(this.activity);
-            convertView = inflater.inflate(this.resource, parent, false);
-            holder = new ViewHolder();
+        if(convertView == null){
+            LayoutInflater inflater = LayoutInflater.from(mActivity);
+            convertView = inflater.inflate(mResource, parent, false);
+            holder= new ViewHolder();
             holder.subject = convertView.findViewById(R.id.subject);
             holder.teacher = convertView.findViewById(R.id.teacher);
             holder.time = convertView.findViewById(R.id.time);
@@ -67,7 +77,8 @@ public class WeekAdapter extends ArrayAdapter<Week> {
             holder.popup = convertView.findViewById(R.id.popupbtn);
             holder.cardView = convertView.findViewById(R.id.week_cardview);
             convertView.setTag(holder);
-        } else {
+        }
+        else{
             holder = (ViewHolder) convertView.getTag();
         }
 
@@ -79,25 +90,24 @@ public class WeekAdapter extends ArrayAdapter<Week> {
         holder.popup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final PopupMenu popup = new PopupMenu(activity, holder.popup);
-                final DbHelper db = new DbHelper(activity);
+                final PopupMenu popup = new PopupMenu(mActivity, holder.popup);
+                final DbHelper db = new DbHelper(mActivity);
                 popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
-                            case R.id.delete_group:
+                            case R.id.delete_popup:
                                 db.deleteWeekById(getItem(position));
                                 db.updateWeek(getItem(position));
-                                weekList.remove(position);
+                                weeklist.remove(position);
                                 notifyDataSetChanged();
                                 return true;
 
                             case R.id.edit_popup:
-                                final View alertLayout = activity.getLayoutInflater().inflate(R.layout.dialog_add_subject, null);
-                                AlertDialogsHelper.getEditSubjectDialog(activity, alertLayout, weekList, listView, position);
+                                final View alertLayout = mActivity.getLayoutInflater().inflate(R.layout.dialog_add_subject, null);
+                                AlertDialogsHelper.getEditSubjectDialog(mActivity, alertLayout, weeklist, mListView, position);
                                 notifyDataSetChanged();
                                 return true;
-
                             default:
                                 return onMenuItemClick(item);
                         }
@@ -106,13 +116,14 @@ public class WeekAdapter extends ArrayAdapter<Week> {
                 popup.show();
             }
         });
+
         hidePopUpMenu(holder);
 
         return convertView;
     }
 
     public ArrayList<Week> getWeekList() {
-        return weekList;
+        return weeklist;
     }
 
     public Week getWeek() {
@@ -120,13 +131,13 @@ public class WeekAdapter extends ArrayAdapter<Week> {
     }
 
     private void hidePopUpMenu(ViewHolder holder) {
-        SparseBooleanArray checkedItems = listView.getCheckedItemPositions();
-        if(checkedItems.size() > 0) {
-            for(int i = 0; i < checkedItems.size(); i++) {
+        SparseBooleanArray checkedItems = mListView.getCheckedItemPositions();
+        if (checkedItems.size() > 0) {
+            for (int i = 0; i < checkedItems.size(); i++) {
                 int key = checkedItems.keyAt(i);
-                if(checkedItems.get(key)) {
+                if (checkedItems.get(key)) {
                     holder.popup.setVisibility(View.INVISIBLE);
-                }
+                    }
             }
         } else {
             holder.popup.setVisibility(View.VISIBLE);

@@ -9,10 +9,11 @@ import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
-import androidx.annotation.RequiresApi;
-import androidx.core.app.NotificationCompat;
-import de.thetechcrafter.esr.R;
+import android.support.annotation.RequiresApi;
+import android.support.v4.app.NotificationCompat;
+
 import de.thetechcrafter.esr.activities.MainActivity;
+import com.ulan.timetable.R;
 
 import java.util.Calendar;
 
@@ -26,7 +27,7 @@ public class DailyReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         this.context = context;
 
-        String message;
+        String message ;
 
         long when = System.currentTimeMillis();
         NotificationManager notificationManager = (NotificationManager) context
@@ -54,7 +55,7 @@ public class DailyReceiver extends BroadcastReceiver {
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
                 .setContentIntent(pendingIntent)
                 .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000});
-        if(notificationManager != null) {
+        if (notificationManager != null) {
             notificationManager.notify(5, mNotifyBuilder.build());
         }
     }

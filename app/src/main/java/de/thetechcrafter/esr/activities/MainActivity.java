@@ -4,32 +4,40 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
+import android.support.v7.preference.PreferenceManager;
 import android.text.TextUtils;
+import android.view.View;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import androidx.appcompat.widget.Toolbar;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.preference.PreferenceManager;
-import androidx.viewpager.widget.ViewPager;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.tabs.TabLayout;
 
-import de.thetechcrafter.esr.R;
+
 import de.thetechcrafter.esr.adapters.FragmentsTabAdapter;
-import de.thetechcrafter.esr.fragments.*;
+import de.thetechcrafter.esr.fragments.FridayFragment;
+import de.thetechcrafter.esr.fragments.MondayFragment;
+import de.thetechcrafter.esr.fragments.SaturdayFragment;
+import de.thetechcrafter.esr.fragments.SundayFragment;
+import de.thetechcrafter.esr.fragments.ThursdayFragment;
+import de.thetechcrafter.esr.fragments.TuesdayFragment;
+import de.thetechcrafter.esr.fragments.WednesdayFragment;
+import com.ulan.timetable.R;
 import de.thetechcrafter.esr.utils.AlertDialogsHelper;
 import de.thetechcrafter.esr.utils.DailyReceiver;
 
 import java.util.Calendar;
 
 import static de.thetechcrafter.esr.utils.BrowserUtil.openUrlInChromeCustomTab;
+
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -78,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         adapter.addFragment(new ThursdayFragment(), getResources().getString(R.string.thursday));
         adapter.addFragment(new FridayFragment(), getResources().getString(R.string.friday));
         viewPager.setAdapter(adapter);
-        viewPager.setCurrentItem(day == 1 ? 6 : day - 2, true);
+        viewPager.setCurrentItem(day == 1 ? 6 : day-2, true);
         tabLayout.setupWithViewPager(viewPager);
     }
 
@@ -90,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             adapter.addFragment(new SaturdayFragment(), getResources().getString(R.string.saturday));
             adapter.addFragment(new SundayFragment(), getResources().getString(R.string.sunday));
             viewPager.setAdapter(adapter);
-            viewPager.setCurrentItem(day == 1 ? 6 : day - 2,  true);
+            viewPager.setCurrentItem(day == 1 ? 6 : day-2, true);
             tabLayout.setupWithViewPager(viewPager);
         } else {
             if(adapter.getFragmentList().size() > 5) {
@@ -100,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         adapter.notifyDataSetChanged();
     }
-
+    
     private void setupCustomDialog() {
         final View alertLayout = getLayoutInflater().inflate(R.layout.dialog_add_subject, null);
         AlertDialogsHelper.getAddSubjectDialog(MainActivity.this, alertLayout, adapter, viewPager);
@@ -121,24 +129,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Calendar cur = Calendar.getInstance();
 
-        if(cur.after(calendar)) {
+        if (cur.after(calendar)) {
             calendar.add(Calendar.DATE, 1);
         }
 
         Intent myIntent = new Intent(this, DailyReceiver.class);
-        int ALARM1_ID = 1000;
+        int ALARM1_ID = 10000;
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 this, ALARM1_ID, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) this.getSystemService(ALARM_SERVICE);
-        if(alarmManager != null) {
+        if (alarmManager != null) {
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
         }
-    }
 
+    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        if(drawer.isDrawerOpen(GravityCompat.START)) {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
@@ -158,7 +166,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent settings = new Intent(MainActivity.this, SettingsActivity.class);
                 startActivity(settings);
                 return true;
-
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -173,35 +180,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if(!TextUtils.isEmpty(schoolWebsite)) {
                     openUrlInChromeCustomTab(getApplicationContext(), schoolWebsite);
                 } else {
-                    Snackbar.make(navigationView, R.string.school_website_snackbar, Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(navigationView, R.string.school_website_snackbar, Snackbar.LENGTH_SHORT).show();
                 }
                 return true;
-
             case R.id.exams:
                 Intent exams = new Intent(MainActivity.this, ExamsActivity.class);
                 startActivity(exams);
                 return true;
-
             case R.id.teachers:
                 Intent teacher = new Intent(MainActivity.this, TeachersActivity.class);
                 startActivity(teacher);
                 return true;
-
             case R.id.homework:
                 Intent homework = new Intent(MainActivity.this, HomeworksActivity.class);
                 startActivity(homework);
                 return true;
-
             case R.id.notes:
                 Intent note = new Intent(MainActivity.this, NotesActivity.class);
                 startActivity(note);
                 return true;
-
             case R.id.settings:
                 Intent settings = new Intent(MainActivity.this, SettingsActivity.class);
                 startActivity(settings);
                 return true;
-
             default:
                 DrawerLayout drawer = findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
