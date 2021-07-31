@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.customtabs.CustomTabsIntent;
 
+/**
+ * Created by Ulan on 19.10.2018.
+ */
 public class BrowserUtil {
     public static void openUrlInChromeCustomTab(Context context, String url) {
         try {

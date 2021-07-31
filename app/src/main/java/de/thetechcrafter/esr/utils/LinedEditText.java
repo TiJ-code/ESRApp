@@ -10,6 +10,9 @@ import android.widget.EditText;
 
 import com.ulan.timetable.R;
 
+/**
+ * Created by Ulan on 28.09.2018.
+ */
 @SuppressLint("AppCompatCustomView")
 public class LinedEditText extends EditText {
     private Rect mRect;

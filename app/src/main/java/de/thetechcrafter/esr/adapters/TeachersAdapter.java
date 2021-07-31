@@ -36,6 +36,7 @@ public class TeachersAdapter extends ArrayAdapter<Teacher> {
     private static class ViewHolder {
         TextView name;
         TextView post;
+        TextView phonenumber;
         TextView email;
         CardView cardView;
         ImageView popup;
@@ -54,10 +55,11 @@ public class TeachersAdapter extends ArrayAdapter<Teacher> {
     public View getView(final int position, View convertView, @NonNull ViewGroup parent) {
         String name = Objects.requireNonNull(getItem(position)).getName();
         String post = Objects.requireNonNull(getItem(position)).getPost();
+        String phonenumber = Objects.requireNonNull(getItem(position)).getPhonenumber();
         String email = Objects.requireNonNull(getItem(position)).getEmail();
         int color = Objects.requireNonNull(getItem(position)).getColor();
 
-        teacher = new Teacher(name, post, email, color);
+        teacher = new Teacher(name, post, phonenumber, email, color);
         final ViewHolder holder;
 
         if(convertView == null){
@@ -66,6 +68,7 @@ public class TeachersAdapter extends ArrayAdapter<Teacher> {
             holder= new ViewHolder();
             holder.name = convertView.findViewById(R.id.nameteacher);
             holder.post = convertView.findViewById(R.id.postteacher);
+            holder.phonenumber = convertView.findViewById(R.id.numberteacher);
             holder.email = convertView.findViewById(R.id.emailteacher);
             holder.cardView = convertView.findViewById(R.id.teacher_cardview);
             holder.popup = convertView.findViewById(R.id.popupbtn);
@@ -75,6 +78,8 @@ public class TeachersAdapter extends ArrayAdapter<Teacher> {
             holder = (ViewHolder) convertView.getTag();
         }
         holder.name.setText(teacher.getName());
+        holder.post.setText(teacher.getPost());
+        holder.phonenumber.setText(teacher.getPhonenumber());
         holder.email.setText(teacher.getEmail());
         holder.cardView.setCardBackgroundColor(teacher.getColor());
         holder.popup.setOnClickListener(new View.OnClickListener() {

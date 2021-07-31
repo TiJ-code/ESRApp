@@ -1,14 +1,18 @@
 package de.thetechcrafter.esr.model;
 
+/**
+ * Created by Ulan on 07.10.2018.
+ */
 public class Teacher {
-    private String name, post, email;
+    private String name, post, phonenumber, email;
     private int id, color;
 
     public Teacher() {
     }
-    public Teacher(String name, String post, String email, int color) {
+    public Teacher(String name, String post, String phonenumber, String email, int color) {
         this.name = name;
         this.post = post;
+        this.phonenumber = phonenumber;
         this.email = email;
         this.color = color;
     }
@@ -27,6 +31,14 @@ public class Teacher {
 
     public void setPost(String post) {
         this.post = post;
+    }
+
+    public String getPhonenumber() {
+        return phonenumber;
+    }
+
+    public void setPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber;
     }
 
     public String getEmail() {

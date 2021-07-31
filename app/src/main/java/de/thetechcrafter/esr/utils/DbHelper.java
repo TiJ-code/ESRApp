@@ -299,6 +299,7 @@ public class DbHelper extends SQLiteOpenHelper{
         ContentValues contentValues = new ContentValues();
         contentValues.put(TEACHERS_NAME, teacher.getName());
         contentValues.put(TEACHERS_POST, teacher.getPost());
+        contentValues.put(TEACHERS_PHONE_NUMBER, teacher.getPhonenumber());
         contentValues.put(TEACHERS_EMAIL, teacher.getEmail());
         contentValues.put(TEACHERS_COLOR, teacher.getColor());
         db.insert(TEACHERS, null, contentValues);
@@ -310,6 +311,7 @@ public class DbHelper extends SQLiteOpenHelper{
         ContentValues contentValues = new ContentValues();
         contentValues.put(TEACHERS_NAME, teacher.getName());
         contentValues.put(TEACHERS_POST, teacher.getPost());
+        contentValues.put(TEACHERS_PHONE_NUMBER, teacher.getPhonenumber());
         contentValues.put(TEACHERS_EMAIL, teacher.getEmail());
         contentValues.put(TEACHERS_COLOR, teacher.getColor());
         db.update(TEACHERS, contentValues, TEACHERS_ID + " = " + teacher.getId(), null);
@@ -332,6 +334,7 @@ public class DbHelper extends SQLiteOpenHelper{
             teacher.setId(cursor.getInt(cursor.getColumnIndex(TEACHERS_ID)));
             teacher.setName(cursor.getString(cursor.getColumnIndex(TEACHERS_NAME)));
             teacher.setPost(cursor.getString(cursor.getColumnIndex(TEACHERS_POST)));
+            teacher.setPhonenumber(cursor.getString(cursor.getColumnIndex(TEACHERS_PHONE_NUMBER)));
             teacher.setEmail(cursor.getString(cursor.getColumnIndex(TEACHERS_EMAIL)));
             teacher.setColor(cursor.getInt(cursor.getColumnIndex(TEACHERS_COLOR)));
             teacherlist.add(teacher);

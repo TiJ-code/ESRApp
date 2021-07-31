@@ -1,5 +1,8 @@
 package de.thetechcrafter.esr.model;
 
+/**
+ * Created by Ulan on 07.12.2018.
+ */
 public class Exam {
     private String subject, teacher, time, date, room;
     private int id, color;

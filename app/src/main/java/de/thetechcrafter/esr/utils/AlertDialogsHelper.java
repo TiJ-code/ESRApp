@@ -43,6 +43,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
+/**
+ * Created by Ulan on 22.10.2018.
+ */
 public class AlertDialogsHelper {
 
     public static void getEditSubjectDialog(final Activity activity, final View alertLayout, final ArrayList<Week> adapter, final ListView listView, int position) {
@@ -529,6 +532,8 @@ public class AlertDialogsHelper {
         editTextHashs.put(R.string.name, name);
         final EditText post = alertLayout.findViewById(R.id.post_dialog);
         editTextHashs.put(R.string.post, post);
+        final EditText phone_number = alertLayout.findViewById(R.id.phonenumber_dialog);
+        editTextHashs.put(R.string.phone_number, phone_number);
         final EditText email = alertLayout.findViewById(R.id.email_dialog);
         editTextHashs.put(R.string.email, email);
         final Button select_color = alertLayout.findViewById(R.id.select_color);
@@ -536,6 +541,7 @@ public class AlertDialogsHelper {
 
         name.setText(teacher.getName());
         post.setText(teacher.getPost());
+        phone_number.setText(teacher.getPhonenumber());
         email.setText(teacher.getEmail());
         select_color.setBackgroundColor(teacher.getColor() != 0 ? teacher.getColor() : Color.WHITE);
 
@@ -582,7 +588,7 @@ public class AlertDialogsHelper {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(TextUtils.isEmpty(name.getText()) || TextUtils.isEmpty(post.getText()) || TextUtils.isEmpty(email.getText())) {
+                if(TextUtils.isEmpty(name.getText()) || TextUtils.isEmpty(post.getText()) || TextUtils.isEmpty(phone_number.getText()) || TextUtils.isEmpty(email.getText())) {
                     for (Map.Entry<Integer, EditText> entry : editTextHashs.entrySet()) {
                         if(TextUtils.isEmpty(entry.getValue().getText())) {
                             entry.getValue().setError(activity.getResources().getString(entry.getKey()) + " " + activity.getResources().getString(R.string.field_error));
@@ -595,6 +601,7 @@ public class AlertDialogsHelper {
                     ColorDrawable buttonColor = (ColorDrawable) select_color.getBackground();
                     teacher.setName(name.getText().toString());
                     teacher.setPost(post.getText().toString());
+                    teacher.setPhonenumber(phone_number.getText().toString());
                     teacher.setEmail(email.getText().toString());
                     teacher.setColor(buttonColor.getColor());
                     dbHelper.updateTeacher(teacher);
@@ -611,6 +618,8 @@ public class AlertDialogsHelper {
         editTextHashs.put(R.string.name, name);
         final EditText post = alertLayout.findViewById(R.id.post_dialog);
         editTextHashs.put(R.string.post, post);
+        final EditText phone_number = alertLayout.findViewById(R.id.phonenumber_dialog);
+        editTextHashs.put(R.string.phone_number, phone_number);
         final EditText email = alertLayout.findViewById(R.id.email_dialog);
         editTextHashs.put(R.string.email, email);
         final Button select_color = alertLayout.findViewById(R.id.select_color);
@@ -665,7 +674,7 @@ public class AlertDialogsHelper {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(TextUtils.isEmpty(name.getText()) || TextUtils.isEmpty(post.getText()) || TextUtils.isEmpty(email.getText())) {
+                if(TextUtils.isEmpty(name.getText()) || TextUtils.isEmpty(post.getText()) || TextUtils.isEmpty(phone_number.getText()) || TextUtils.isEmpty(email.getText())) {
                     for (Map.Entry<Integer, EditText> entry : editTextHashs.entrySet()) {
                         if(TextUtils.isEmpty(entry.getValue().getText())) {
                             entry.getValue().setError(activity.getResources().getString(entry.getKey()) + " " + activity.getResources().getString(R.string.field_error));
@@ -677,6 +686,7 @@ public class AlertDialogsHelper {
                     ColorDrawable buttonColor = (ColorDrawable) select_color.getBackground();
                     teacher.setName(name.getText().toString());
                     teacher.setPost(post.getText().toString());
+                    teacher.setPhonenumber(phone_number.getText().toString());
                     teacher.setEmail(email.getText().toString());
                     teacher.setColor(buttonColor.getColor());
                     dbHelper.insertTeacher(teacher);
@@ -687,6 +697,7 @@ public class AlertDialogsHelper {
 
                     name.getText().clear();
                     post.getText().clear();
+                    phone_number.getText().clear();
                     email.getText().clear();
                     select_color.setBackgroundColor(Color.WHITE);
                     name.requestFocus();

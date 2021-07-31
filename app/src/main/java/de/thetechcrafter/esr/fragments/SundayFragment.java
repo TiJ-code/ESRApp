@@ -12,6 +12,10 @@ import de.thetechcrafter.esr.utils.DbHelper;
 import com.ulan.timetable.R;
 import de.thetechcrafter.esr.utils.FragmentHelper;
 
+
+/**
+ * Created by Ulan on 06.09.2018.
+ */
 public class SundayFragment extends Fragment {
 
     public static final String KEY_SUNDAY_FRAGMENT = "Sunday";
