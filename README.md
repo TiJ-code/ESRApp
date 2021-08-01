@@ -4,6 +4,10 @@
  und das erinnern an selbst eingetragene Schulaufgaben.\
  (Nicht Serverseitig, bisher nur lokal)
 
+### Download
+ Android APK:
+ [Download](https://e.pcloud.link/publink/show?code=XZXtf0Z55fvdqIbNFFgXhkRQvMf5QuVU4gX)
+
 
 ## Version 1.0.2 – Build #310721-2:
  Texturen sind angepasst.
